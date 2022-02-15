@@ -36,16 +36,15 @@ const Home: NextPage = () => {
           </Listbox.Action>
           {itemsState.items.map((item) => {
             return (
-              <Listbox.Option key={item.id} value={item.id}>
-                <p
-                  style={{
-                    textDecorationLine: !item.status ? "line-through" : "none",
-                    padding: 10,
-                  }}
-                >
-                  {item.title}
-                </p>
-              </Listbox.Option>
+              <div
+                key={item.id}
+                style={{
+                  textDecorationLine: !item.status ? "line-through" : "none",
+                  padding: 10,
+                }}
+              >
+                <Listbox.Option value={item.id}>{item.title}</Listbox.Option>
+              </div>
             );
           })}
         </Listbox>
