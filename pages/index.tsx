@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
 import { useContext, useState } from "react";
-import { Page, Card, Modal, Listbox } from "@shopify/polaris";
+import { Page, Card, Modal, Listbox, Icon } from "@shopify/polaris";
 import { useRouter } from "next/router";
 import { Item, ItemsContext } from "./_app";
+import { CirclePlusMinor } from "@shopify/polaris-icons";
 
 const Home: NextPage = () => {
   const itemsState = useContext(ItemsContext);
@@ -31,7 +32,7 @@ const Home: NextPage = () => {
       <Card>
         <Listbox onSelect={onSelectList}>
           <Listbox.Action value="action" divider>
-            <strong> + New Item</strong>
+            <Icon color="highlight" source={CirclePlusMinor} />
           </Listbox.Action>
           {itemsState.items.map((item) => {
             return (
