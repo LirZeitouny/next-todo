@@ -11,20 +11,16 @@ const Home: NextPage = () => {
   const [currentItem, setCurrentItem] = useState<Item>();
 
   const onSelectDelete = () => {
-    currentItem ? itemsState.removeItem(currentItem) : "";
-  };
-
-  const onSelectMoveStatus = () => {
-    currentItem?.changeStatus();
+    currentItem ? itemsState.removeItem(currentItem.id) : "";
+    setItemPopUpStatus(false);
   };
 
   const onSelectList = (value: string) => {
     if (value === "action") router.push("./creationForm");
 
     itemsState.items.forEach((item) => {
-      if (item.title === value) {
+      if (item.id === value) {
         setCurrentItem(item);
-        console.log(item);
         setItemPopUpStatus(true);
       }
     });
@@ -39,7 +35,16 @@ const Home: NextPage = () => {
           </Listbox.Action>
           {itemsState.items.map((item) => {
             return (
-              <Listbox.Option value={item.title}>{item.title}</Listbox.Option>
+              <Listbox.Option key={item.id} value={item.id}>
+                <p
+                  style={{
+                    textDecorationLine: !item.status ? "line-through" : "none",
+                    padding: 10,
+                  }}
+                >
+                  {item.title}
+                </p>
+              </Listbox.Option>
             );
           })}
         </Listbox>
@@ -52,7 +57,10 @@ const Home: NextPage = () => {
         title={currentItem?.title}
         primaryAction={{
           content: currentItem?.status ? "Move to Done" : "Reopen",
-          onAction: () => {},
+          onAction: () => {
+            currentItem ? itemsState.updateStatus(currentItem.id) : "";
+            setItemPopUpStatus(false);
+          },
         }}
         secondaryActions={[
           {
