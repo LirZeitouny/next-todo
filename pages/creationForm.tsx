@@ -6,6 +6,9 @@ import {
   Modal,
   TextField,
   Banner,
+  Card,
+  Frame,
+  Layout,
 } from "@shopify/polaris";
 import { useState, useCallback, useContext } from "react";
 import { ItemsContext } from "./_app";
@@ -39,35 +42,47 @@ const CreationForm = () => {
 
   return (
     <div>
-      <Button onClick={() => router.push("./")}>Back</Button>
-      <Page narrowWidth title="Add new TODO Item:">
-        <Form noValidate onSubmit={handleSubmit}>
-          <FormLayout>
-            <TextField
-              id="title"
-              value={title}
-              onChange={setTitle}
-              label="Title:"
-              autoComplete="off"
-              type="text"
-              placeholder=""
-              error="Fill this field"
-            />
-            <TextField
-              id="description"
-              value={description}
-              onChange={setDescription}
-              label="Description:"
-              autoComplete="off"
-              type="text"
-              placeholder=""
-              error="Fill this field"
-            />
-            <Button primary submit>
-              Submit this TODO
-            </Button>
-          </FormLayout>
-        </Form>
+      <Page
+        breadcrumbs={[
+          {
+            content: "List",
+            onAction: () => {
+              router.push("./");
+            },
+          },
+        ]}
+        divider
+        title="Add new TODO Item:"
+        narrowWidth
+      >
+        <Card sectioned>
+          <Form noValidate onSubmit={handleSubmit}>
+            <FormLayout>
+              <TextField
+                id="title"
+                value={title}
+                onChange={setTitle}
+                label="Title:"
+                autoComplete="off"
+                type="text"
+                placeholder=""
+                error={validationStatus ? "" : "Fill this field"}
+              />
+              <TextField
+                id="description"
+                value={description}
+                onChange={setDescription}
+                label="Description:"
+                autoComplete="off"
+                type="text"
+                placeholder=""
+              />
+              <Button primary submit>
+                Submit this TODO
+              </Button>
+            </FormLayout>
+          </Form>
+        </Card>
       </Page>
     </div>
   );
